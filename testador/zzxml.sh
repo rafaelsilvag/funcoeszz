@@ -64,58 +64,12 @@ $
 #----------------------------------------------------------------------
 # --indent: Formata o XML, com indent (implica --tidy)
 
-$ zzxml --indent zzxml.in.xml 
-<xml>
-	<section>
-		<title>
-			Título
-		</title>
-		<img src="foo.png" />
-		<para>
-			Meu parágrafo, com 
-			<strong>
-				negrito
-			</strong>
-			e 
-			<em>
-				itálico
-			</em>
-			.	
-		</para>
-		<escape>
-			&quot;&amp;&apos;&lt;&gt;
-		</escape>
-	</section>
-</xml>
-$
+$ zzxml --indent zzxml.in.xml     #→ --file zzxml.out.indent.xml
 
 #----------------------------------------------------------------------
 # --indent com um XML sem quebras de linha
 
-$ zzxml --tidy zzxml.in.xml | tr -d '\n' | zzxml --indent 
-<xml>
-	<section>
-		<title>
-			Título
-		</title>
-		<img src="foo.png" />
-		<para>
-			Meu parágrafo, com 
-			<strong>
-				negrito
-			</strong>
-			e 
-			<em>
-				itálico
-			</em>
-			.	
-		</para>
-		<escape>
-			&quot;&amp;&apos;&lt;&gt;
-		</escape>
-	</section>
-</xml>
-$
+$ zzxml --tidy zzxml.in.xml | tr -d '\n' | zzxml --indent  #→ --file zzxml.out.indent.xml
 
 #----------------------------------------------------------------------
 # --notag NOME: Remove uma tag e seu conteúdo (implica --tidy)
@@ -354,6 +308,43 @@ $ zzxml --tag 'escape' zzxml.in.xml
 <escape>
 &quot;&amp;&apos;&lt;&gt;
 </escape>
+$
+
+$ echo 'Apenas <div>algumas <span><center>Tags</center> justapostas</span></div>' | zzxml --tag center
+<center>
+Tags
+</center>
+$
+
+$ echo 'Apenas <div>algumas <span><center>Tags</center> justapostas</span></div>' | zzxml --tag span
+<span>
+<center>
+Tags
+</center>
+ justapostas
+</span>
+$
+
+$ echo 'Apenas <div>algumas <span><center>Tags</center> justapostas</span></div>' | zzxml --notag center --tag div
+<div>
+algumas 
+<span>
+ justapostas
+</span>
+</div>
+$
+
+$ echo 'Apenas <div>algumas <span><center>Tags</center> justapostas</span></div>' | zzxml --indent
+Apenas 
+<div>
+	algumas 
+	<span>
+		<center>
+			Tags
+		</center>
+		justapostas
+	</span>
+</div>
 $
 
 $ zzxml --tag 'escape' --unescape zzxml.in.xml

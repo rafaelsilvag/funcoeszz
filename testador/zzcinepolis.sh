@@ -1,175 +1,71 @@
-# Preparação filtro
-$ filtro='2s|[0-3][0-9]/[0-2][0-9] .*|DATA|; 3s/ filme */filme   /; 4,${ s/Legendado  *//;s/Dublado  *//; s/\([0-2][0-9]:[0-5][0-9] *\)\{1,\}$/HORARIO/; s/[0-9][0-9] anos/99 anos/; s/Livre  /99 anos/; s/NC     /99 anos/; s/^ *[0-9]\{1,\} /  9 /; s/9 .* 9/9   FILME   9/; }'
+# Uso incorreto
+
+$ zzcinepolis 99    ;echo $?             #→ --regex ^Uso:.*\n1
+$ zzcinepolis Tokyo ;echo $?             #→ --regex ^Uso:.*\n1
+
+# Sem argumentos mostra a lista de cidades/cinemas
+
+$ zzcinepolis 
+Cidades e cinemas disponíveis:
+Barueri - SP - Iguatemi Alphaville - 8
+Barueri - SP - Parque Barueri - 22
+Bauru - SP - Nações Bauru - 34
+Belém - PA - Boulevard Belem - 2
+Belém - PA - Parque Belem - 20
+Belo Horizonte - MG - Estacao BH - 24
+Blumenau - SC - Norte Shopping - 10
+Campinas - SP - Campinas Shopping - 14
+Campo Grande - MS - Norte Sul Plaza - 13
+Carapicuíba - SP - Plaza Shopping Carapicuíba - 53
+Cariacica - ES - Moxuara - 46
+Caxias do Sul - RS - San Pelegrino - 12
+Cuiabá - MT - Três Américas - 39
+Curitiba - PR - Pátio Batel - 35
+Fortaleza - CE - North Shopping Jóquei - 37
+Fortaleza - CE - RioMar Fortaleza - 47
+Fortaleza - CE - Riomar Kennedy - 54
+Goiânia - GO - Cerrado - 52
+Guarulhos - SP - Parque Shopping Maia - 48
+Jaboatão dos Guararapes - PE - Shopping Guararapes  - 15
+João Pessoa - PB - Manaíra Shopping - 16
+João Pessoa - PB - Mangabeira - 51
+Jundiaí - SP - Jundiaí Shopping - 26
+Macapá - AP - Amapá Garden - 49
+Manaus - AM - Ponta Negra - 29
+Manaus - AM - Manaus Plaza - 40
+Manaus - AM - Millennium - 41
+Marília - SP - Marília Shopping - 43
+Natal - RN - Natal Shopping - 31
+Natal - RN - Partage Norte Shopping Natal - 33
+Ribeirão Preto - SP - Santa Úrsula - 1
+Ribeirão Preto - SP - Iguatemi Ribeirão Preto - 30
+Rio de Janeiro - RJ - Lagoon - 6
+Salvador - BA - Salvador Norte - 5
+Salvador - BA - Bela Vista - 23
+São Bernardo do Campo - SP - São Bernardo Plaza - 27
+São Gonçalo - RJ - São Gonçalo Shopping - 17
+São José do Rio Preto - SP - Iguatemi São José do Rio Preto - 42
+São José do Rio Preto - SP - Plaza Avenida SJRP - 44
+São José/Florianópolis - SC - Continente Shopping - 25
+São Luís - MA - São Luis Shopping - 18
+São Paulo - SP - Mais Shopping - 3
+São Paulo - SP - Metrô Itaquera - 19
+São Paulo - SP - JK Iguatemi - 21
+Sorocaba/Votorantim - SP - Iguatemi Esplanada - 36
+Teresina - PI - Rio Poty - 50
+Uberlândia - MG - Center Shopping Uberlandia - 38
 $
 
-$ zzcinepolis 1 | sed "$filtro" | uniq
-Cinépolis Santa Úrsula
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$
-$ zzcinepolis 2 | sed "$filtro" | uniq
-Cinépolis Boulevard Belem
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 5 | sed "$filtro" | uniq
-Cinépolis Salvador Norte
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 8 | sed "$filtro" | uniq
-Cinépolis Iguatemi Alphaville
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 10 | sed "$filtro" | uniq
-Cinépolis Norte Shopping
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 12 | sed "$filtro" | uniq
-Cinépolis San Pelegrino
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 13 | sed "$filtro" | uniq
-Cinépolis Norte Sul Plaza
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 14 | sed "$filtro" | uniq
-Cinépolis Campinas Shopping
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 15 | sed "$filtro" | uniq
-Cinépolis Shopping Guararapes
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 16 | sed "$filtro" | uniq
-Cinépolis Manaíra Shopping
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
+# Uso normal, informando número e cidade
+
+$ filtro='2s|[0-3][0-9]/[0-2][0-9]|DATA|; 3s/ filme */filme   /; 4,${ s/Legendado  *//;s/Dublado  *//; s/\([0-2][0-9]:[0-5][0-9] *\)\{1,\}$/HORARIO/; s/[0-9][0-9] anos/99 anos/; s/Livre  /99 anos/; s/NC     /99 anos/; s/^ *[0-9]\{1,\} /  9 /; s/9 .* 9/9   FILME   9/; }'
 $ zzcinepolis 17 | sed "$filtro" | uniq
 Cinépolis São Gonçalo Shopping
 DATA
 sala  filme   class.     horários
   9   FILME   99 anos    HORARIO
-$ zzcinepolis 18 | sed "$filtro" | uniq
-Cinépolis São Luis Shopping
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 19 | sed "$filtro" | uniq
-Cinépolis Metrô Itaquera
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 24 | sed "$filtro" | uniq
-Cinépolis Estacao BH
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 25 | sed "$filtro" | uniq
-Cinépolis Continente Shopping
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 26 | sed "$filtro" | uniq
-Cinépolis Jundiaí Shopping
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 27 | sed "$filtro" | uniq
-Cinépolis São Bernardo Plaza
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 30 | sed "$filtro" | uniq
-Cinépolis Iguatemi Ribeirão Preto
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 31 | sed "$filtro" | uniq
-Cinépolis Natal Shopping
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 34 | sed "$filtro" | uniq
-Cinépolis Nações Bauru
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 35 | sed "$filtro" | uniq
-Cinépolis Pátio Batel
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 36 | sed "$filtro" | uniq
-Cinépolis Iguatemi Esplanada
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 37 | sed "$filtro" | uniq
-Cinépolis North Shopping Jóquei
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 38 | sed "$filtro" | uniq
-Cinépolis Center Shopping Uberlandia
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 39 | sed "$filtro" | uniq
-Cinépolis Três Américas
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 41 | sed "$filtro" | uniq
-Cinépolis Millennium
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 43 | sed "$filtro" | uniq
-Cinépolis Marília Shopping
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 44 | sed "$filtro" | uniq
-Cinépolis Plaza Avenida SJRP
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 46 | sed "$filtro" | uniq
-Cinépolis Moxuara
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 48 | sed "$filtro" | uniq
-Cinépolis Parque Shopping Maia
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 49 | sed "$filtro" | uniq
-Cinépolis Amapá Garden
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 50 | sed "$filtro" | uniq
-Cinépolis Rio Poty
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 51 | sed "$filtro" | uniq
-Cinépolis Mangabeira
-DATA
-sala  filme   class.     horários
-  9   FILME   99 anos    HORARIO
-$ zzcinepolis 52 | sed "$filtro" | uniq
-Cinépolis Cerrado
+$ zzcinepolis São Gonçalo | sed "$filtro" | uniq
+Cinépolis São Gonçalo Shopping
 DATA
 sala  filme   class.     horários
   9   FILME   99 anos    HORARIO
