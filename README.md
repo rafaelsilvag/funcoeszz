@@ -1,4 +1,4 @@
-## Funções ZZ [![Build Status](https://travis-ci.org/funcoeszz/funcoeszz.svg?branch=master)](https://travis-ci.org/funcoeszz/funcoeszz)
+## Funções ZZ
 
 Funções ZZ é uma coletânea com mais de 180 miniaplicativos de utilidades diversas, prontos para serem usados na linha de comando de sistemas tipo UNIX (Linux, BSD, Cygwin, Mac OS X, entre outros).
 
@@ -49,11 +49,37 @@ Agora sim, você pode usar as Funções ZZ em toda a sua glória. Abra um novo t
 
     $ zzcalcula 10+5
     15
-    
+
     $ zzbissexto 2016
     2016 é bissexto
-    
+
     $ zzmaiusculas tá funcionando
     TÁ FUNCIONANDO
 
 Quando quiser atualizar os arquivos para a versão mais recente, basta um `git pull`.
+
+## Execução via Docker
+
+A imagem oficial das Funções ZZ é a [funcoeszz/zz](https://hub.docker.com/r/funcoeszz/zz/).
+
+Primeiro, baixe-a para a sua máquina:
+
+```
+docker pull funcoeszz/zz
+```
+
+Agora basta rodar o contêiner e informar qual função você quer usar, junto com seus parâmetros:
+
+```console
+$ docker run --rm funcoeszz/zz horariodeverao
+16/10/2016
+19/02/2017
+
+$ docker run --rm funcoeszz/zz senha 30
+pipj74x30fEbzbx0rcPEwukL2WKjCA
+
+$ docker run --rm funcoeszz/zz maiusculas tá funcionando
+TÁ FUNCIONANDO
+```
+
+**Desenvolvedor:** Para instruções sobre como construir esta imagem, ou como rodar outro tipo de comandos dentro do contêiner, [veja esta wiki](https://github.com/funcoeszz/funcoeszz/wiki/Docker)

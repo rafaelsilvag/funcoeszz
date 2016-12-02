@@ -8,7 +8,7 @@
 #
 # Autor: Marcell S. Martini <marcellmartini (a) gmail com>
 # Desde: 2008-08-25
-# Versão: 9
+# Versão: 11
 # Licença: GPLv2
 # Requisitos: zzecho zzjuntalinhas zztrim zzutf8 zzxml
 # Tags: cinema
@@ -17,12 +17,13 @@ zzcinemais ()
 {
 	zzzz -h cinemais "$1" && return
 
-	local cidades codigo
+	local cidades
+	local codigo="$1"
 	local url='http://www.cinemais.com.br/programacao'
 
 	cidades=$(
-		zztool source -o "ISO-8859-1" "$url" |
-		zztool texto_em_iso |
+		zztool source "$url" |
+		zzutf8 |
 		sed -n '/cliclabeProg/,/cliclabeProg/p' |
 		zzxml --notag script --tag li |
 		zztrim |
@@ -31,22 +32,29 @@ zzcinemais ()
 		sort -n
 	)
 
-	if test -z "$1"
+	if test -z "$codigo"
 	then
 		echo "$cidades"
 		return
 	fi
 
-	zztool testa_numero "$1" || { zztool -e uso cinemais; return 1; }
+	if ! zztool testa_numero "$codigo"
+	then
+		zztool -e uso cinemais
+		return 1
+	fi
 
-	codigo="$1"
+	if ! echo "$cidades" | grep "^${codigo} - " >/dev/null
+	then
+		zztool erro "Não encontrei o cinema ${codigo}"
+		return 1
+	fi
 
 	# Especificando User Agent na opçãp -u "Mozilla/5.0"
-	zzecho -N -l ciano $(echo "$cidades" | grep "^${codigo} - "| sed 's/^[0-9][0-9]* - //')
-	zztool source  -o "ISO-8859-1" -u "Mozilla/5.0" "${url}/cinema.php?cc=${codigo}" 2>/dev/null |
-	zztool texto_em_iso |
-	zzutf8 |
+	zzecho -N -l ciano $(echo "$cidades" | grep "^${codigo} - " | sed 's/^[0-9][0-9]* - //')
+	zztool source -u "Mozilla/5.0" "${url}/cinema.php?cc=${codigo}" 2>/dev/null |
 	grep -E '(<td><a href|<td><small|[0-9] a [0-9])' |
+	zzutf8 |
 	zztrim |
 	sed 's/<[^>]*>//g;s/Programa.* - //' |
 	awk '{print}; NR%2==1 {print ""}' |
