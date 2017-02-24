@@ -1,5 +1,6 @@
 language: bash
 
+<<<<<<< HEAD
 os:
   - linux
   # OS X tests are taking too long to run :(
@@ -11,19 +12,22 @@ addons:
     packages:
       - bc
       - links
+=======
+>>>>>>> origin/aureliojargas-testing
 before_install:
-  # OS X: install packages (||true to avoid Linux fail)
-  - test "$TRAVIS_OS_NAME" = osx && brew update                 || true
-  - test "$TRAVIS_OS_NAME" = osx && brew install --devel elinks || true
-  - test "$TRAVIS_OS_NAME" = osx && brew install links          || true
-  - curl -sOL https://raw.githubusercontent.com/aureliojargas/clitest/master/clitest
+  - url_base="https://raw.githubusercontent.com/aureliojargas/clitest"
+  - curl -sOL "${url_base}/master/clitest"
   - chmod +x clitest
   - mv clitest testador
 
 script:
+<<<<<<< HEAD
   - if test "$TRAVIS_OS_NAME" = osx;   then cd testador && ./run; fi
   - if test "$TRAVIS_OS_NAME" = linux; then cd testador && ./run $(ls -1 zz*.sh | grep -xv zzlinux.sh); fi
   # Exclude zzlinux tests in Linux (see https://github.com/funcoeszz/funcoeszz/issues/355) 
+=======
+  - cd testador && ./run zzcores.sh
+>>>>>>> origin/aureliojargas-testing
 
 notifications:
   email: false
