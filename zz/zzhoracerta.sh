@@ -14,6 +14,7 @@
 # Desde: 2004-03-29
 # Versão: 4
 # Licença: GPL
+# Tags: internet, tempo, consulta
 # ----------------------------------------------------------------------------
 zzhoracerta ()
 {
@@ -24,7 +25,7 @@ zzhoracerta ()
 	local url='http://www.worldtimeserver.com'
 
 	# Opções de linha de comando
-	if test "$1" = '-s'
+	if test '-s' = "$1"
 	then
 		shift
 		codigo="$1"

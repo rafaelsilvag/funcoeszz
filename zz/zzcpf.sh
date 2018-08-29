@@ -15,6 +15,7 @@
 # Versão: 4
 # Licença: GPL
 # Requisitos: zzaleatorio zzcut
+# Tags: cálculo, consulta, manipulação
 # ----------------------------------------------------------------------------
 zzcpf ()
 {
@@ -26,7 +27,7 @@ zzcpf ()
 	cpf=$(echo "$*" | tr -d -c 0123456789)
 
 	#Retorna estado(s) ao qual o CPF pertence
-	if test "$1" = '-e'
+	if test '-e' = "$1"
 	then
 		# Se o CPF estiver vazio, define com zero
 		: ${cpf:=0}
@@ -61,7 +62,7 @@ zzcpf ()
 	fi
 
 	# CPF válido formatado
-	if test "$1" = '-f'
+	if test '-f' = "$1"
 	then
 		# Remove os zeros do início (senão é considerado um octal)
 		cpf=$(echo "$cpf" | sed 's/^0*//')
@@ -89,7 +90,7 @@ zzcpf ()
 	fi
 
 	# CPF válido não formatado
-	if test "$1" = '-F'
+	if test '-F' = "$1"
 	then
 		# Se o CPF estiver vazio, gera um aleatoriamente sem formatação
 		if test "${#cpf}" -eq 0
@@ -114,7 +115,7 @@ zzcpf ()
 	fi
 
 	# Devo ocultar a saída ou mensagem de erro?
-	test "$1" = '-q' && quieto=1
+	test '-q' = "$1" && quieto=1
 
 	# Extrai os números da base do CPF:
 	# Os 9 primeiros, sem os dois dígitos verificadores.

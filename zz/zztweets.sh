@@ -11,6 +11,7 @@
 # Versão: 10
 # Licença: GPL
 # Requisitos: zzsqueeze zztrim
+# Tags: internet, consulta
 # ----------------------------------------------------------------------------
 zztweets ()
 {
@@ -23,7 +24,7 @@ zztweets ()
 	local url="https://twitter.com"
 
 	# Opções de linha de comando
-	if test "$1" = '-n'
+	if test '-n' = "$1"
 	then
 		limite="$2"
 		shift
@@ -36,7 +37,7 @@ zztweets ()
 	name=$(echo "$1" | tr -d @)
 	url="${url}/${name}"
 
-	LANG=en zztool dump $url |
+	LANG=en zztool dump -w 500 $url |
 		awk '/^ *@/{imp=1;next};imp' |
 		sed -n '/^ *Tweets *$/,/Back to top/p' |
 		sed '1,/^ *More *$/ d

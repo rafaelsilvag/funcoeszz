@@ -12,6 +12,7 @@
 # Desde: 2018-03-30
 # Versão: 1
 # Licença: GPL
+# Tags: diretório, emulação
 # ----------------------------------------------------------------------------
 zzmcd ()
 {
@@ -37,7 +38,7 @@ zzmcd ()
 	case "$opt" in
 		s) echo mkdir -p $*; erro=0 ;;
 		*)
-			mkdir -p $* 2>/dev/null && test "$opt" = "n" && erro=0
+			mkdir -p $* 2>/dev/null && test 'n' = "$opt" && erro=0
 			# Verificando diretórios que falharam
 			for dir in $*
 			do
